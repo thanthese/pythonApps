@@ -4,20 +4,24 @@ import math
 # Stephen Mann
 # April 2011
 #
-# Solution 7-11 problem: find 4 numbers whose sum and product are exactly 7.11
+# 7-11 problem: find 4 numbers whose sum and product are exactly 7.11
 #
-# Method: use algebra to reduce the search space from 711^4 to 711^2.
+# Method: use algebra to reduce the search space from 711^4 to 711^2.  Then
+# iterate only over factors of 711,000,000, up to 711, instead of one-by-one
 #
 # Notes:
 # - precision is python is annoying, hence the fiddling with powers of ten
 # - a,b,c,d are the numbers to find.  b and c are givens (by loops), a and
 #   d are solved for.  m and n are helpers.
-# - this solution doesn't scale well, obviously
-# - runtime is less than one second
+# - runtime is less than one-tenth of a second
 # - there is exactly one solution
+#
+# Python 2.5.1
 #
 
 z = 7.11
+z_sum = z * 100
+z_prod = z * 100000000
 
 def a(b, c):
   _m = m(b, c)
@@ -45,11 +49,12 @@ def isSolution(a, b, c, d):
   b1 = forcePrecision(b)
   c1 = forcePrecision(c)
   d1 = forcePrecision(d)
-  return a1 + b1 + c1 + d1 == z * 100 and a1 * b1 * c1 * d1 == z * 100000000
+  return a1 + b1 + c1 + d1 == z_sum and a1 * b1 * c1 * d1 == z_prod
 
 def findSolution():
-  for b in xrange(1, 712):  # xrange doesn't support decimals
-    for c in xrange(b, 712):
+  factors = getAllFactors(z_prod, z_sum)
+  for b in factors:
+    for c in factors:
       B = b / 100.0  # divide to make proper decimal
       C = c / 100.0
       A = a(B, C)
@@ -65,6 +70,14 @@ def prettyDisplay(a, b, c, d):
   print "sum: %.2f" % (a + b + c + d)
   print "product: %.2f" % (a * b * c * d)
 
-if __name__ == '__main__':
+def getAllFactors(of, upto):
+  possibilities = range(1, int(upto) + 1)
+  isFactor = lambda f: float(of) / f == round(of / f)
+  return filter(isFactor, possibilities)
+
+def main():
   solution = findSolution()
   prettyDisplay(*solution)
+
+if __name__ == '__main__':
+  main()

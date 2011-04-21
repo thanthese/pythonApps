@@ -16,5 +16,8 @@ class TestSevenEleven(unittest.TestCase):
     roundedSolution = map(lambda n: round(n * 100), solution)
     self.assertEqual(set(roundedSolution), set([120, 125, 150, 316]))
 
+  def test_getAllFactors(self):
+    self.assertEqual(set(S.getAllFactors(12, 5)), set([1, 2, 3, 4]))
+
 if __name__ == '__main__':
   unittest.main()
