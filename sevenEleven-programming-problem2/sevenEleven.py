@@ -86,7 +86,7 @@ def main():
 
 def colorize(n):
   if n < 0: return 0
-  if n > 7.11: return 711
+  if n > z: return int(z_sum)
   return int(n * 100)
 
 def makeColors():
@@ -106,5 +106,5 @@ def makeColors():
     print
 
 if __name__ == '__main__':
-  #main()
-  makeColors()
+  main()
+  #makeColors()
