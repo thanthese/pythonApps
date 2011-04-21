@@ -19,5 +19,11 @@ class TestSevenEleven(unittest.TestCase):
   def test_getAllFactors(self):
     self.assertEqual(set(S.getAllFactors(12, 5)), set([1, 2, 3, 4]))
 
+  def test_colorize(self):
+    self.assertEqual(S.colorize(-1), 0)
+    self.assertEqual(S.colorize(8), 711)
+    self.assertEqual(S.colorize(6.09), 609)
+    self.assertEqual(S.colorize(2.63), 263)
+
 if __name__ == '__main__':
   unittest.main()

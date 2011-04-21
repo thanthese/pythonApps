@@ -16,6 +16,11 @@ import math
 # - runtime is less than one-tenth of a second
 # - there is exactly one solution
 #
+# Colorize: Program can be run in either "solve" or "colorize" mode.  To
+# convert the PGM file to png, run something like this:
+#
+#     $ py sevenEleven.py | convert - output.png
+#
 # Python 2.5.1
 #
 
@@ -26,7 +31,7 @@ z_prod = z * 100000000
 def a(b, c):
   _m = m(b, c)
   _n = n(b, c)
-  top = -_n + math.sqrt(_n*_n - 4*_m*z)
+  top = -_n + math.sqrt(abs(_n*_n - 4*_m*z))
   bottom = 2 * _m
   return top / bottom
 
@@ -79,5 +84,27 @@ def main():
   solution = findSolution()
   prettyDisplay(*solution)
 
+def colorize(n):
+  if n < 0: return 0
+  if n > 7.11: return 711
+  return int(n * 100)
+
+def makeColors():
+  top = int(z_sum)
+
+  print "P2"
+  print "# some comment"
+  print top, top
+  print top
+
+  for b in xrange(1, top + 1):
+    for c in xrange(1, top + 1):
+      B = b / 100.0  # divide to make proper decimal
+      C = c / 100.0
+      A = a(B, C)
+      print colorize(A),
+    print
+
 if __name__ == '__main__':
-  main()
+  #main()
+  makeColors()
